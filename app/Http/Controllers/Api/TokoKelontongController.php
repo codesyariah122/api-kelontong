@@ -35,7 +35,7 @@ class TokoKelontongController extends Controller
     public function user_has_online()
     {
         try{
-            $user = User::where('login', 1)->get();
+            $user = User::with('profiles')->where('login', 1)->get();
             if(count($user) > 0){                
                 return response()->json([
                     'online' => true,
@@ -46,6 +46,21 @@ class TokoKelontongController extends Controller
             return response()->json([
                 'online' => false,
                 'message' => 'No user online !'
+            ]);
+        }catch(\Throwable $th){
+            throw $th;
+        }
+    }
+
+    public function detail_user_login($id)
+    {
+        try{            
+            $user = User::with('profiles')
+            ->where('id', $id)->get();
+            return response()->json([
+                'success' => true,
+                'message' => 'Fetch detail user has login',
+                'data' => $user
             ]);
         }catch(\Throwable $th){
             throw $th;

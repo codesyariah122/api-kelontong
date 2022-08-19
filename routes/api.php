@@ -19,6 +19,7 @@ Route::prefix('v1')->group(function(){
     Route::middleware('auth:api')->get('/user', function (Request $request) {
         return $request->user();
     });
+    Route::get('/user-detail-login/{id}', [TokoKelontongController::class, 'detail_user_login']);
 
     Route::post('/register', [RegisterController::class, 'register']);
     Route::post('/login', [LoginController::class, 'login']);
